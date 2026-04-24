@@ -26,8 +26,6 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support, roc
 from datasets.HUIDatasetInteractive import HUIInteract360Interactive
 # when using strictly as in training
 from datasets.HUIDataset import HUIInteract360
-# when using with the ligth dataset mode to save space for Supplementary Material size limit
-from datasets.HUIDatasetLight import HUIInteract360Light
 
 # Import the predictors classes
 from predictors.mlp import MLPInteractionPredictor

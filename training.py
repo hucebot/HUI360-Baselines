@@ -29,8 +29,6 @@ from sklearn.ensemble import RandomForestClassifier
 # Import the datasets classes
 # when using strictly classical training
 from datasets.HUIDataset import HUIInteract360
-# when using with the light dataset mode to save space for Supplementary Material size limit
-from datasets.HUIDatasetLight import HUIInteract360Light
 
 # Import the predictors classes
 from predictors.mlp import MLPInteractionPredictor
