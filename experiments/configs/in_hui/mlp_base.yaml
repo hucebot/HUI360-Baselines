@@ -264,4 +264,4 @@ force_align_negatives_val: force_aligment
 cross_eval_type: hui_train_vs_hui_test
 valid: true
 hostname: raphael-Precision-3591
-experiment_name: expe_102_00002
+experiment_name: in_hui_mlp
