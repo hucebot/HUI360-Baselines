@@ -2,7 +2,7 @@ force_model_type: stgcn
 learning_rate: 0.001
 lr_scheduler_type: none
 lr_decay: 0.99
-weight_decay: 0.1
+weight_decay: 5.0e-03
 loss_type: BCEWithLogitsLoss
 use_weighted_loss: true
 optimizer_type: AdamW

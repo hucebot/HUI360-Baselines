@@ -37,6 +37,11 @@ You can evaluate the existing checkpoints (or the ones created during training)
 python infer.py --model_path ./checkpoints/[SPLIT]/[MODELNAME].pth
 ```
 
+module load conda
+conda activate huienv
+cd ~/public/Projects/github/HUI360-Baselines
+python training.py -hp ./experiments/configs/in_ssup -eif 2 --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/cross_ssup_hui --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/cross_hui_ssup --save_model -pd -uw -pn baselinesall
+
 ### Baselines (HUI)
 Common to all models :
 - 32 Frames Input (~2.1 second)

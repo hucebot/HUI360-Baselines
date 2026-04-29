@@ -2,13 +2,13 @@ force_model_type: stgcn
 learning_rate: 0.001
 lr_scheduler_type: none
 lr_decay: 0.99
-weight_decay: 0.1
+weight_decay: 5.0e-03
 loss_type: BCEWithLogitsLoss
 use_weighted_loss: true
 optimizer_type: AdamW
 grad_clip: -1.0
 batch_size: 128
-epochs: 100
+epochs: 50
 mb_input_norm: vid
 mb_head_dropout: 0.5
 mb_head_hidden_dim: 128
