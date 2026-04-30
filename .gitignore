@@ -2,3 +2,9 @@
 __pycache__
 *.pyc
 NOTES.md
+datasets/hf_data/
+mlp_*.pth
+skateformer_*.pth
+stg_nf_*.pth
+stgcn_*.pth
+# lstm_*.pth
