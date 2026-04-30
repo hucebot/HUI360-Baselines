@@ -7,7 +7,7 @@ loss_type: BCEWithLogitsLoss
 use_weighted_loss: true
 optimizer_type: AdamW
 grad_clip: -1.0
-batch_size: 16
+batch_size: 128
 epochs: 75
 mb_input_norm: vid
 mb_head_dropout: 0.5
