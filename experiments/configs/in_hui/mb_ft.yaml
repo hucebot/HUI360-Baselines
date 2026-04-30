@@ -1,4 +1,4 @@
-force_model_type: mb_from_pretrained
+force_model_type: mb_from_pretrained_finetune
 learning_rate: 0.0001
 lr_scheduler_type: ExponentialDecay
 lr_decay: 0.99
@@ -8,7 +8,7 @@ use_weighted_loss: true
 optimizer_type: AdamW
 grad_clip: -1.0
 batch_size: 128
-epochs: 300
+epochs: 75
 mb_input_norm: vid
 mb_head_dropout: 0.5
 mb_head_hidden_dim: 1024

@@ -41,6 +41,7 @@ python infer.py --model_path ./checkpoints/[SPLIT]/[MODELNAME].pth
 
 A few checkpoints are provided you can download more [here](https://huggingface.co/buckets/rlorlou/hui360-baselines-checkpoints)
 
+python training.py -hp ./experiments/configs/in_hui/mb_base.yaml --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/in_hui/mb_ft.yaml --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/in_ssup/mb_base.yaml --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/in_ssup/mb_ft.yaml --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/cross_hui_ssup/mb_base.yaml --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/cross_hui_ssup/mb_ft.yaml --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/cross_ssup_hui/mb_base.yaml --save_model -pd -uw -pn baselinesall; python training.py -hp ./experiments/configs/cross_ssup_hui/mb_ft.yaml --save_model -pd -uw -pn baselinesall;
 
 ### Baselines (HUI)
 Common to all models :

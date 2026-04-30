@@ -11,3 +11,4 @@ stgcn_*.pth
 datasets/temp_data/
 experiments/results/
 MB_release.bin
+MB_lite_release.bin
