@@ -50,6 +50,10 @@ from predictors.STGCN.net.st_gcn import Model as STGCN
 from predictors.SkateFormer.model.SkateFormer import SkateFormer
 
 from functools import partial
+# from predictors.MotionBERT.lib.data.dataset_action import coco2h36m
+# from predictors.MotionBERT.lib.utils.tools import *
+from predictors.MotionBERT.lib.model.DSTformer import DSTformer
+from predictors.MotionBERT.lib.model.model_action import ActionNet
 
 # Import custom utils
 from utils.print_utils import *
@@ -123,7 +127,28 @@ def train_epoch(model, dataloader, criterion, optimizer, device, wandb_logger=No
             # add the polar coordinates to the input tensor
             input_tensor, data_columns = convert_to_polar_coordinates(input_tensor, dataloader.dataset.data_columns_in_dataset)            
         
-        if type(model) == STGCN:
+        if type(model) == ActionNet:
+            input_tensor = input_tensor_to_format_by_channel(input_tensor, metadata, dataloader.dataset.data_columns_in_dataset) # B,T,V,C with V=17 and COCO format
+            input_tensor = coco2h36m(input_tensor) # B,T,V,C with V=17 and H36M format
+
+            if config["mb_input_norm"] == "vid":
+                # w, h = metadata["image_size"][0][0], metadata["image_size"][1][0]
+                w, h = metadata[0]["image_size"][0], metadata[0]["image_size"][1]
+                scale = min(w,h) / 2.0
+                input_tensor[...,:2] = input_tensor[...,:2] - torch.tensor([w, h]) / 2.0
+                input_tensor[...,:2] = input_tensor[...,:2] / scale
+            elif config["mb_input_norm"] == "scale":
+                # older version : WARNING this makes the evaluation depending on the batch size and content !
+                input_tensor = crop_scale_torch(input_tensor, [1,1])
+            elif config["mb_input_norm"] == "scale_sample":
+                input_tensor = crop_scale_torch_by_sample(input_tensor)
+            else:
+                prError(f"Unknown mb_input_norm: {config['mb_input_norm']}")
+                raise ValueError(f"Unknown mb_input_norm: {config['mb_input_norm']}")
+
+            input_tensor = input_tensor.unsqueeze(1) # Add the M (views) dimension
+        
+        elif type(model) == STGCN:
             in_channels = model.in_channels
             input_tensor = input_tensor_to_format_by_channel(input_tensor, metadata, dataloader.dataset.data_columns_in_dataset) # B,T,V,C
             input_tensor = keypoints17_to_coco18_torch(input_tensor) # B,T,V,C with C=18
@@ -287,7 +312,27 @@ def evaluate(model, dataloader, criterion, device, wandb_logger=None, config=Non
                 # add the polar coordinates to the input tensor
                 input_tensor, data_columns = convert_to_polar_coordinates(input_tensor, dataloader.dataset.data_columns_in_dataset)
                 
-            if type(model) == STGCN:
+            if type(model) == ActionNet:
+                input_tensor = input_tensor_to_format_by_channel(input_tensor, metadata, dataloader.dataset.data_columns_in_dataset) # norm was done before
+                input_tensor = coco2h36m(input_tensor)
+
+                if config["mb_input_norm"] == "vid":
+                    # w, h = metadata["image_size"][0][0], metadata["image_size"][1][0]
+                    w, h = metadata[0]["image_size"][0], metadata[0]["image_size"][1]
+                    scale = min(w,h) / 2.0
+                    input_tensor[...,:2] = input_tensor[...,:2] - torch.tensor([w, h]) / 2.0
+                    input_tensor[...,:2] = input_tensor[...,:2] / scale
+                elif config["mb_input_norm"] == "scale":
+                    input_tensor = crop_scale_torch(input_tensor, [1,1])
+                elif config["mb_input_norm"] == "scale_sample":
+                    input_tensor = crop_scale_torch_by_sample(input_tensor)
+                else:
+                    prError(f"Unknown mb_input_norm: {config['mb_input_norm']}")
+                    raise ValueError(f"Unknown mb_input_norm: {config['mb_input_norm']}")
+
+                input_tensor = input_tensor.unsqueeze(1)
+
+            elif type(model) == STGCN:
                 in_channels = model.in_channels
                 input_tensor = input_tensor_to_format_by_channel(input_tensor, metadata, dataloader.dataset.data_columns_in_dataset) # B,T,V,C
                 input_tensor = keypoints17_to_coco18_torch(input_tensor) # B,T,V,C with C=18
@@ -609,7 +654,69 @@ def train_model(args, num_workers=0):
             dropout=config["lstm_dropout"],
             bidirectional=False
         ).to(device)
+        
+    elif train_model_type.lower().startswith("motionbert") or train_model_type.lower().startswith("mb"):
+        # Default parameters from pretrain/MB_pretrain.yaml
+        dst_dim_feat = 256 if "_lite" in train_model_type.lower() else 512
+        dst_depth = 5
+        dst_dim_rep = 512
+        backbone = DSTformer(
+            dim_in=3, 
+            dim_out=3, # for the 3D reconstruction, but we will not use it if we return the representation
+            dim_feat=dst_dim_feat, 
+            dim_rep=dst_dim_rep, 
+            depth=dst_depth, 
+            num_heads=8, 
+            mlp_ratio=4 if "_lite" in train_model_type.lower() else 2, 
+            norm_layer=partial(nn.LayerNorm, eps=1e-6), 
+            maxlen=243, 
+            num_joints=17,
+            desired_return=config["mb_desired_return"]
+        )
+        if "_pretrained" in train_model_type.lower():
+            
+            if args.force_motion_bert_checkpoint_path is not None:
+                checkpoint = torch.load(args.force_motion_bert_checkpoint_path, map_location=lambda storage, loc: storage)
+            else:
+                mb_checkpoint_file = "MB_lite_release.bin" if "_lite" in train_model_type.lower() else "MB_release.bin"
+                checkpoint = torch.load(os.path.join(here, "predictors", "MotionBERT", "checkpoints", mb_checkpoint_file), map_location=lambda storage, loc: storage)
+                
+            new_state_dict = OrderedDict()
+            for k, v in checkpoint['model_pos'].items():
+                name = k[7:] # remove 'module.'
+                new_state_dict[name] = v 
+            backbone.load_state_dict(new_state_dict, strict=True)
+            if not "_finetune" in train_model_type.lower():
+                for name, p in backbone.named_parameters():
+                    p.requires_grad = False
+        elif "_scratch" in train_model_type.lower():
+            # train from scratch
+            pass
+        else:
+            raise ValueError(f"Invalid model type: {train_model_type} expect _from_pretrained or _from_scratch in the name")
+
+        # default parameters from configs/action/MB_train_NTU60_xview.yaml
+        torch.manual_seed(SEED) # use this such that the model is initialized in a deterministic way (useful to compare with pretrain_future.py)
+        action_net_dim_rep = None
+        if config["mb_desired_return"] == "embeddings":
+            action_net_dim_rep = dst_dim_feat
+        elif config["mb_desired_return"] == "intermediates":
+            action_net_dim_rep = sum(dst_dim_feat for _ in range(dst_depth))
+        elif config["mb_desired_return"] == "representation":
+            action_net_dim_rep = dst_dim_rep
+        else:
+            raise ValueError(f"Invalid mb_desired_return: {config['mb_desired_return']} expect embeddings, intermediates or representation")
+        
+        model = ActionNet(backbone=backbone, 
+                          dim_rep=action_net_dim_rep, 
+                          num_classes=1, 
+                          dropout_ratio=config["mb_head_dropout"], 
+                        #   version=config["mb_head_version"], 
+                          hidden_dim=config["mb_head_hidden_dim"], 
+                          fixed_time_length=sequence_length,
+                          num_joints=17).to(device)
     
+
     elif train_model_type.lower() == "stg_nf":
         model = STG_NF(device=device,
                         pose_shape=(2, sequence_length, 18),
@@ -961,6 +1068,7 @@ if __name__ == "__main__":
     parser.add_argument("--preload_only", "-po", action="store_true", default=False, help="Preload data only, do not train")
     parser.add_argument("--offline_mode", "-om", action="store_true", default=False, help="Offline mode, do not download from Hugging Face")
     parser.add_argument("--export_tracks_ids", "-eti", action="store_true", default=False, help="Export unique track identifiers for train and validation sets to txt files")
+    parser.add_argument("--force_motion_bert_checkpoint_path", "-fmbcp", default=None, type=str, help="Force MotionBERT checkpoint path")
     args = parser.parse_args()
     
     if args.use_wandb:
