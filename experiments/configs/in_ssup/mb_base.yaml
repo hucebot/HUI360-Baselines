@@ -222,7 +222,7 @@ hf_dataset_revision: main
 comment: NoComment
 force_align_negatives_train: force_aligment
 force_align_negatives_val: force_aligment
-cross_eval_type: hui_train_vs_hui_test
+cross_eval_type: ssup_train_vs_ssup_test
 valid: true
 hostname: raphael-Precision-3591
-experiment_name: in_hui_mb_base_finetune
+experiment_name: in_ssup_mb_base
