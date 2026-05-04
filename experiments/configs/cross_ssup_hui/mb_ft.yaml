@@ -8,7 +8,7 @@ use_weighted_loss: true
 optimizer_type: AdamW
 grad_clip: -1.0
 batch_size: 128
-epochs: 75
+epochs: 50
 mb_input_norm: vid
 mb_head_dropout: 0.5
 mb_head_hidden_dim: 1024
