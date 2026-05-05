@@ -127,14 +127,20 @@ Visualization is possible with `dataset_visualizer.py`.
 - The tool automatically looks for data in `./datasets/hf_data` and may download the dataset if necessary
 - You can select the recordings you want to open (tip : select only one for faster loading)
 - You can set different preprocessing parameters such as the `T_CUT` and `T_POS` (rationale on the positive/negative samples)
-- When ready click : "Create Dataset"
+- When ready click : `Create Dataset` (bottom left)
 - Then when generating the visualizer makes use of `datasets/HUIDataset.py` to create a `Dataset` objects and you may see sample by sample the result (you will only see samples cropped to the desired length, not raw data with full tracks)
 - You can pass a `--raw_data_path` if you have the raw video files to have them as background
 - For some models and checkpoints you may use `Load Config From Checkpoint` or `Load Config And Model From Checkpoint` in order to load the exact same config used for training/inference, and you may visualize the inference results
 
 </details>
 
-## Acknoledgements
-The code for the SkateFormer, STG-NF, ST-GCN baselines were taken from their respective open-source implementation.
+## Citation
 
-TODO Add Links.
+```
+TODO
+```
+
+## Acknoledgements
+The code for the [SkateFormer](https://github.com/KAIST-VICLab/SkateFormer), [STG-NF](https://github.com/orhir/STG-NF), [ST-GCN](https://github.com/yysijie/st-gcn), [MotionBERT](https://github.com/Walter0807/MotionBERT) baselines were taken from their respective open-source implementation.
+
+This work uses the amazing [SSUP-HRI](https://github.com/IRL-CT/SSUP-HRI) dataset from [Interaction Research Lab](https://irl.tech.cornell.edu/)
