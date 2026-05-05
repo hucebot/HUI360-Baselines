@@ -45,8 +45,10 @@ python training.py -hp ./experiments/configs/in_hui/mb_base.yaml --save_model -p
 
 python training.py -hp ./experiments/configs/in_ssup/mb_base.yaml --save_model -pd -uw -pn baselinesall; 
 python training.py -hp ./experiments/configs/in_ssup/mb_ft.yaml --save_model -pd -uw -pn baselinesall; 
+
 python training.py -hp ./experiments/configs/cross_hui_ssup/mb_base.yaml --save_model -pd -uw -pn baselinesall; 
 python training.py -hp ./experiments/configs/cross_hui_ssup/mb_ft.yaml --save_model -pd -uw -pn baselinesall; 
+
 python training.py -hp ./experiments/configs/cross_ssup_hui/mb_base.yaml --save_model -pd -uw -pn baselinesall; 
 python training.py -hp ./experiments/configs/cross_ssup_hui/mb_ft.yaml --save_model -pd -uw -pn baselinesall;
 

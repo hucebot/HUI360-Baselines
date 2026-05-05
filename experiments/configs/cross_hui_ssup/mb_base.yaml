@@ -1,14 +1,14 @@
 force_model_type: mb_from_pretrained
-learning_rate: 0.0001
+learning_rate: 0.001
 lr_scheduler_type: ExponentialDecay
 lr_decay: 0.99
-weight_decay: 5.0e-03
+weight_decay: 5.0e-02
 loss_type: BCEWithLogitsLoss
 use_weighted_loss: true
 optimizer_type: AdamW
 grad_clip: -1.0
 batch_size: 128
-epochs: 300
+epochs: 50
 mb_input_norm: vid
 mb_head_dropout: 0.5
 mb_head_hidden_dim: 1024
@@ -254,7 +254,7 @@ hf_dataset_revision: main
 comment: NoComment
 force_align_negatives_train: force_aligment
 force_align_negatives_val: force_aligment
-cross_eval_type: cross_hui_ssup_mb_base
+cross_eval_type: hui_train_vs_ssup_test
 valid: true
 hostname: raphael-Precision-3591
 experiment_name: cross_hui_ssup_mb_base
