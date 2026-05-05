@@ -118,7 +118,20 @@ Visualization is possible with `dataset_visualizer.py`.
 <details>
 <summary>Using the interactive visualizer</summary>
 ### Instructions for visualization
-TODO
+
+![Interactive Visualizer Screenshot](./illustrations/dataset_visualizer.png)
+
+**Instruction : play with it !**
+
+Additional explanations :
+- The tool automatically looks for data in `./datasets/hf_data` and may download the dataset if necessary
+- You can select the recordings you want to open (tip : select only one for faster loading)
+- You can set different preprocessing parameters such as the `T_CUT` and `T_POS` (rationale on the positive/negative samples)
+- When ready click : "Create Dataset"
+- Then when generating the visualizer makes use of `datasets/HUIDataset.py` to create a `Dataset` objects and you may see sample by sample the result (you will only see samples cropped to the desired length, not raw data with full tracks)
+- You can pass a `--raw_data_path` if you have the raw video files to have them as background
+- For some models and checkpoints you may use `Load Config From Checkpoint` or `Load Config And Model From Checkpoint` in order to load the exact same config used for training/inference, and you may visualize the inference results
+
 </details>
 
 ## Acknoledgements
