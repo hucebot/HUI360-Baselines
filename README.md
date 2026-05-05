@@ -111,19 +111,18 @@ Common to all models :
 
 
 ## Visualization
-![image info](./illustrations/datasetvisualizer.jpg)
 
 Visualization is possible with `dataset_visualizer.py`.
 
 <details>
 <summary>Using the interactive visualizer</summary>
-### Instructions for visualization
+**Instructions for visualization**
 
 ![Interactive Visualizer Screenshot](./illustrations/dataset_visualizer.png)
 
-**Instruction : play with it !**
+*Instruction 1 : play with it !*
 
-Additional explanations :
+*Additional explanations :*
 - The tool automatically looks for data in `./datasets/hf_data` and may download the dataset if necessary
 - You can select the recordings you want to open (tip : select only one for faster loading)
 - You can set different preprocessing parameters such as the `T_CUT` and `T_POS` (rationale on the positive/negative samples)
