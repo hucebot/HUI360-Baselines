@@ -116,6 +116,7 @@ Visualization is possible with `dataset_visualizer.py`.
 
 <details>
 <summary>Using the interactive visualizer</summary>
+
 **Instructions for visualization**
 
 ![Interactive Visualizer Screenshot](./illustrations/dataset_visualizer.png)
