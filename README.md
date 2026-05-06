@@ -7,6 +7,7 @@ Code for baselines of human-robot interaction anticipation on HUI360 dataset as 
 [![arXiv](https://img.shields.io/badge/arXiv-TDB-lightgrey)](https://arxiv.org/abs/TDB)
 [![HuggingFace Datasets](https://img.shields.io/badge/dataset-HuggingFace-blueviolet)](https://huggingface.co/datasets/rlorlou/HUI360)
 [![Processing Code](https://img.shields.io/badge/code-GitHub-black?logo=github)](https://github.com/RaphaelLorenzo/Interact360/)
+[![Website](https://img.shields.io/badge/website-hui360-green)](https://hucebot.github.io/hui360/)
 
 <!-- **Links:**
 - Paper: https://hal.science/view/index/docid/5609928
