@@ -8,3 +8,7 @@ skateformer_*.pth
 stg_nf_*.pth
 stgcn_*.pth
 # lstm_*.pth
+datasets/temp_data/
+experiments/results/
+MB_release.bin
+MB_lite_release.bin
