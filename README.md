@@ -2,7 +2,17 @@
 
 Code for baselines of human-robot interaction anticipation on HUI360 dataset as presented in "HUI360: A dataset and baselines for Human Robot Interaction Anticipation" (FG2026).
 
-TODO: Add badges and links
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Paper](https://img.shields.io/badge/paper-HAL%20Science-blue)](https://hal.science/view/index/docid/5609928)
+[![arXiv](https://img.shields.io/badge/arXiv-TDB-lightgrey)](https://arxiv.org/abs/TDB)
+[![HuggingFace Datasets](https://img.shields.io/badge/dataset-HuggingFace-blueviolet)](https://huggingface.co/datasets/rlorlou/HUI360)
+[![Processing Code](https://img.shields.io/badge/code-GitHub-black?logo=github)](https://github.com/RaphaelLorenzo/Interact360/)
+
+<!-- **Links:**
+- Paper: https://hal.science/view/index/docid/5609928
+- arXiv: https://arxiv.org/abs/TDB
+- Data (HuggingFace): https://huggingface.co/datasets/rlorlou/HUI360
+- Processing code: https://github.com/RaphaelLorenzo/Interact360/ -->
 
 ## Legacy baselines code
 Please refer to the `legacy` branch of this repository for the results presented in the paper. Updates on the data and code have been made and new baselines have been added in this newer version. 
