@@ -562,14 +562,14 @@ class GraphWidget(QWidget):
             ax.set_ylim(frame.shape[0], 0)  # Inverted y-axis to match image coordinates
                         
             # Check if shift was applied (do_recenter_interaction_zone was used)
-            shift_applied = self.current_metadata["shift_applied"]
-            interaction_zone_center_positions = self.current_metadata["interaction_zone_center_position"]
-            xmin_meta = self.current_metadata["xmin_meta"]
-            xmax_meta = self.current_metadata["xmax_meta"]
-            ymin_meta = self.current_metadata["ymin_meta"]
-            ymax_meta = self.current_metadata["ymax_meta"]
-            image_width = self.current_metadata["image_size"][0]
-            image_height = self.current_metadata["image_size"][1]
+            shift_applied = self.current_metadata.get("shift_applied", None)
+            interaction_zone_center_positions = self.current_metadata.get("interaction_zone_center_position", None)
+            xmin_meta = self.current_metadata.get("xmin_meta", None)
+            xmax_meta = self.current_metadata.get("xmax_meta", None)
+            ymin_meta = self.current_metadata.get("ymin_meta", None)
+            ymax_meta = self.current_metadata.get("ymax_meta", None)
+            image_width = self.current_metadata.get("image_size", None)[0]
+            image_height = self.current_metadata.get("image_size", None)[1]
             
             # Convert tensors to numpy arrays if needed
             if xmin_meta is not None:
@@ -2652,14 +2652,14 @@ class DataVisualizationWidget(QWidget):
                     frame[header_height:header_height+img_h, 0:img_w] = image_np
                 
                 # Check if shift was applied (do_recenter_interaction_zone was used)
-                shift_applied = metadata["shift_applied"]
-                interaction_zone_center_positions = metadata["interaction_zone_center_position"]
-                xmin_meta = metadata["xmin_meta"]
-                xmax_meta = metadata["xmax_meta"]
-                ymin_meta = metadata["ymin_meta"]
-                ymax_meta = metadata["ymax_meta"]
-                image_width = metadata["image_size"][0]
-                image_height = metadata["image_size"][1]
+                shift_applied = metadata.get("shift_applied", None)
+                interaction_zone_center_positions = metadata.get("interaction_zone_center_position", None)
+                xmin_meta = metadata.get("xmin_meta", None)
+                xmax_meta = metadata.get("xmax_meta", None)
+                ymin_meta = metadata.get("ymin_meta", None)
+                ymax_meta = metadata.get("ymax_meta", None)
+                image_width = metadata.get("image_size", None)[0]
+                image_height = metadata.get("image_size", None)[1]
                 
                 # Convert tensors to numpy arrays if needed
                 if xmin_meta is not None:

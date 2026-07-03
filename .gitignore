@@ -13,3 +13,4 @@ experiments/results/
 MB_release.bin
 MB_lite_release.bin
 *.pkl
+*.mp4
