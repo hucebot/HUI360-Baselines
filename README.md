@@ -3,7 +3,7 @@
 Code for baselines of human-robot interaction anticipation on HUI360 dataset as presented in "HUI360: A dataset and baselines for Human Robot Interaction Anticipation" (FG2026).
 
 [![Paper](https://img.shields.io/badge/paper-HAL%20Science-blue)](https://hal.science/view/index/docid/5609928)
-[![arXiv](https://img.shields.io/badge/arXiv-TDB-lightgrey)](https://arxiv.org/abs/TDB)
+<!-- [![arXiv](https://img.shields.io/badge/arXiv-TDB-lightgrey)](https://arxiv.org/abs/TDB) -->
 [![HuggingFace Datasets](https://img.shields.io/badge/dataset-HuggingFace-blueviolet)](https://huggingface.co/datasets/rlorlou/HUI360)
 [![Processing Code](https://img.shields.io/badge/code-GitHub-black?logo=github)](https://github.com/RaphaelLorenzo/Interact360/)
 [![Website](https://img.shields.io/badge/website-hui360-green)](https://hucebot.github.io/hui360/)
@@ -67,59 +67,59 @@ You can find detailed WandB logs in `./experiments/logs`
 - #Validation Tracks : 407 total / 68 positives
 - #Training Tracks : 1417 total / 135 positives
 
-| Name                        | #Params (Trained) | AUC (Last)   | AUC (Best)   | AP (Last)    | AP (Best)    |
-|-----------------------------|-------------------|--------------|--------------|--------------|--------------|
-| LSTM                        | 0.37M             | 0.861        | 0.875        | 0.486        | 0.578        |
-| MotionBERT (Head Only)      | 8.91M             | 0.821        | 0.842        | 0.492        | 0.544        |
-| MotionBERT (Full FT)        | 51.4M             | 0.820        | 0.876        | 0.534        | 0.662        |
-| MLP                         | 0.07M             | 0.856        | 0.859        | 0.476        | 0.545        |
-| SkateFormer                 | 1.91M             | 0.781        | 0.838        | 0.362        | 0.540        |
-| STG-NF                      | 0.07M             | 0.805        | 0.827        | 0.492        | 0.532        |
-| ST-GCN                      | 3.07M             | 0.880        | 0.899        | 0.581        | 0.637        |
+| Name                        | #Params (Trained) | AUC          | AP           |
+|-----------------------------|-------------------|--------------|--------------|
+| LSTM                        | 0.37M             | 0.861        | 0.486        |
+| MotionBERT (Head Only)      | 8.91M             | 0.821        | 0.492        |
+| MotionBERT (Full FT)        | 51.4M             | 0.820        | 0.534        |
+| MLP                         | 0.07M             | 0.856        | 0.476        |
+| SkateFormer                 | 1.91M             | 0.781        | 0.362        |
+| STG-NF                      | 0.07M             | 0.805        | 0.492        |
+| ST-GCN                      | 3.07M             | 0.880        | 0.581        |
 
 
 #### For SSUP-A (in dataset)
 - #Validation Tracks : 4875 total / 148 positives
 - #Training Tracks : 6098 total / 135 positives
 
-| Name                        | #Params (Trained) | AUC (Last)   | AUC (Best)   | AP (Last)    | AP (Best)    |
-|-----------------------------|-------------------|--------------|--------------|--------------|--------------|
-| LSTM                        | 0.37M             | 0.897        | 0.908        | 0.230        | 0.268        |
-| MotionBERT (Head Only)      | 8.91M             | 0.889        | 0.899        | 0.227        | 0.229        |
-| MotionBERT (Full FT)        | 51.4M             | 0.863        | 0.904        | 0.269        | 0.269        |
-| MLP                         | 0.07M             | 0.874        | 0.888        | 0.198        | 0.251        |
-| SkateFormer                 | 1.91M             | 0.826        | 0.844        | 0.175        | 0.190        |
-| STG-NF                      | 0.07M             | 0.758        | 0.782        | 0.082        | 0.099        |
-| ST-GCN                      | 3.07M             | 0.868        | 0.882        | 0.213        | 0.246        |
+| Name                        | #Params (Trained) | AUC          | AP           |
+|-----------------------------|-------------------|--------------|--------------|
+| LSTM                        | 0.37M             | 0.897        | 0.230        |
+| MotionBERT (Head Only)      | 8.91M             | 0.889        | 0.227        |
+| MotionBERT (Full FT)        | 51.4M             | 0.863        | 0.269        |
+| MLP                         | 0.07M             | 0.874        | 0.198        |
+| SkateFormer                 | 1.91M             | 0.826        | 0.175        |
+| STG-NF                      | 0.07M             | 0.758        | 0.082        |
+| ST-GCN                      | 3.07M             | 0.868        | 0.213        |
 
 #### For cross dataset evaluation (train on HUI, test on SSUP-A)
 - #Validation Tracks : 4875 total / 148 positives
 - #Training Tracks : 1417 total / 135 positives
 
-| Name                        | #Params (Trained) | AUC (Last)   | AUC (Best)   | AP (Last)    | AP (Best)    |
-|-----------------------------|-------------------|--------------|--------------|--------------|--------------|
-| LSTM                        | 0.37M             | 0.757        | 0.797        | 0.106        | 0.134        |
-| MotionBERT (Head Only)      | 8.91M             | 0.615        | 0.817        | 0.061        | 0.151        |
-| MotionBERT (Full FT)        | 51.4M             | 0.670        | 0.728        | 0.075        | 0.122        |
-| MLP                         | 0.07M             | 0.770        | 0.785        | 0.112        | 0.135        |
-| SkateFormer                 | 1.91M             | 0.568        | 0.709        | 0.058        | 0.072        |
-| STG-NF                      | 0.07M             | 0.573        | 0.609        | 0.043        | 0.051        |
-| ST-GCN                      | 3.07M             | 0.688        | 0.732        | 0.056        | 0.104        |
+| Name                        | #Params (Trained) | AUC          | AP           |
+|-----------------------------|-------------------|--------------|--------------|
+| LSTM                        | 0.37M             | 0.757        | 0.106        |
+| MotionBERT (Head Only)      | 8.91M             | 0.615        | 0.061        |
+| MotionBERT (Full FT)        | 51.4M             | 0.670        | 0.075        |
+| MLP                         | 0.07M             | 0.770        | 0.112        |
+| SkateFormer                 | 1.91M             | 0.568        | 0.058        |
+| STG-NF                      | 0.07M             | 0.573        | 0.043        |
+| ST-GCN                      | 3.07M             | 0.688        | 0.056        |
 
 
 #### For cross dataset evaluation (train on SSUP-A, test on HUI)
 - #Validation Tracks : 407 total / 68 positives
 - #Training Tracks : 6098 total / 135 positives
 
-| Name                        | #Params (Trained) | AUC (Last)   | AUC (Best)   | AP (Last)    | AP (Best)    |
-|-----------------------------|-------------------|--------------|--------------|--------------|--------------|
-| LSTM                        | 0.37M             | 0.797        | 0.797        | 0.402        | 0.463        |
-| MotionBERT (Head Only)      | 8.91M             | 0.686        | 0.746        | 0.359        | 0.406        |
-| MotionBERT (Full FT)        | 51.4M             | 0.756        | 0.791        | 0.343        | 0.413        |
-| MLP                         | 0.07M             | 0.778        | 0.802        | 0.463        | 0.491        |
-| SkateFormer                 | 1.91M             | 0.732        | 0.752        | 0.430        | 0.453        |
-| STG-NF                      | 0.07M             | 0.634        | 0.701        | 0.327        | 0.412        |
-| ST-GCN                      | 3.07M             | 0.749        | 0.837        | 0.432        | 0.523        |
+| Name                        | #Params (Trained) | AUC          | AP           |
+|-----------------------------|-------------------|--------------|--------------|
+| LSTM                        | 0.37M             | 0.797        | 0.402        |
+| MotionBERT (Head Only)      | 8.91M             | 0.686        | 0.359        |
+| MotionBERT (Full FT)        | 51.4M             | 0.756        | 0.343        |
+| MLP                         | 0.07M             | 0.778        | 0.463        |
+| SkateFormer                 | 1.91M             | 0.732        | 0.430        |
+| STG-NF                      | 0.07M             | 0.634        | 0.327        |
+| ST-GCN                      | 3.07M             | 0.749        | 0.432        |
 
 </details>
 
@@ -151,12 +151,15 @@ Visualization is possible with `dataset_visualizer.py`.
 ## Citation
 
 ```
-@article{TBD,
-  author    = {Raphael Lorenzo-Louis and Fabio Amadio and Bertrand Luvison and Serena Ivaldi},
-  title     = {HUI360: A dataset and baselines for Human Robot Interaction Anticipation},
-  journal   = {TBD},
-  year      = {2026},
-}
+@INPROCEEDINGS{11556969,
+  author={Lorenzo-Louis, Raphael and Amadio, Fabio and Luvison, Bertrand and Ivaldi, Serena},
+  booktitle={2026 IEEE 20th International Conference on Automatic Face and Gesture Recognition (FG)}, 
+  title={HUI360 : A 360° Egocentric Dataset and Baselines for Human-Robot Interaction Anticipation}, 
+  year={2026},
+  volume={},
+  number={},
+  pages={1-9},
+  doi={10.1109/FG67764.2026.11556969}}
 ```
 
 ## Acknoledgements
