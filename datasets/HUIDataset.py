@@ -227,9 +227,23 @@ class HUIInteract360(Dataset):
                 
             dataset_csvs.sort()
             hf_data_dir = hf_local_dir
-        
+
+            resolved_csvs = []
+            n_light = 0
             for csv in dataset_csvs:
-                assert os.path.exists(os.path.join(hf_local_dir, csv)), f"File {csv} does not exist in {hf_local_dir}"
+                csv_path = os.path.join(hf_local_dir, csv)
+                light_csv = csv[:-4] + "_light.csv" if csv.endswith(".csv") else csv + "_light.csv"
+                light_path = os.path.join(hf_local_dir, light_csv)
+                if os.path.exists(csv_path):
+                    resolved_csvs.append(csv)
+                elif os.path.exists(light_path):
+                    resolved_csvs.append(light_csv)
+                    n_light += 1
+                else:
+                    assert False, f"File {csv} (or {light_csv}) does not exist in {hf_local_dir}"
+            dataset_csvs = resolved_csvs
+            if n_light > 0:
+                prInfo(f"Using {n_light} light csv files from {hf_local_dir}")
             
             if self.do_recenter_interaction_zone:
                 assert os.path.exists(os.path.join(hf_local_dir, "interaction_zone_center_positions.json")), f"File interaction_zone_center_positions.json does not exist in {hf_local_dir}"

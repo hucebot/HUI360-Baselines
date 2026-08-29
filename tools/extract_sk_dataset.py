@@ -2,8 +2,10 @@
 import argparse
 from math import e
 import os
+import sys
 # Define the here variable to be the directory of the current file
 here = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(here, ".."))
 from tqdm import tqdm
 import joblib
 from collections import OrderedDict
@@ -55,8 +57,9 @@ def extract_dataset_to_dict(dataset, config):
     n = len(dataset)
     data = np.empty((n, 48, 17, 3), dtype=np.float32)
     labels = np.empty(n, dtype=np.int64)
+    ids = np.empty(n, dtype=object)
 
-    for i, (input_tensor, label, _metadata_dict, _images_tensor, _masks_tensor) in enumerate(
+    for i, (input_tensor, label, metadata_dict, _images_tensor, _masks_tensor) in enumerate(
         tqdm(dataset, total=n, desc="Extracting samples")
     ):
         if hasattr(input_tensor, "numpy"):
@@ -69,7 +72,9 @@ def extract_dataset_to_dict(dataset, config):
         else:
             labels[i] = int(label)
 
-    return {"config": config, "data": data, "labels": labels}
+        ids[i] = metadata_dict["unique_track_identifier"]
+
+    return {"config": config, "data": data, "labels": labels, "ids": ids}
 
 
 if __name__ == "__main__":
@@ -79,10 +84,10 @@ if __name__ == "__main__":
     parser.add_argument("--hf_local_dir", "-hld", default="default", type=str, help="HF local directory (default: default, ie ./datasets/hf_data)")
     parser.add_argument("--verbose", "-v", action="store_true", default=False, help="Verbose mode")
     parser.add_argument("--output_dir", "-o", default=os.path.join(here, "datasets", "sk_extracted"), type=str, help="Directory for exported pickle files")
+    parser.add_argument("--offline_mode", "-om", action="store_true", default=False, help="Offline mode, do not download from Hugging Face")
     args = parser.parse_args()
     args.preload_data = False
     args.preload_only = False
-    args.offline_mode = False
     
     
     default_config = {'train_tracks_filename': 'all',
@@ -175,6 +180,7 @@ if __name__ == "__main__":
         payload = extract_dataset_to_dict(dataset, config)
         assert payload["data"].shape == (len(dataset), 48, 17, 3), payload["data"].shape
         assert payload["labels"].shape == (len(dataset),), payload["labels"].shape
+        assert payload["ids"].shape == (len(dataset),), payload["ids"].shape
         joblib.dump(payload, output_path)
-        print(f"Saved {output_path} — data {payload['data'].shape}, labels {payload['labels'].shape}")
+        print(f"Saved {output_path} — data {payload['data'].shape}, labels {payload['labels'].shape}, ids {payload['ids'].shape}")
 
